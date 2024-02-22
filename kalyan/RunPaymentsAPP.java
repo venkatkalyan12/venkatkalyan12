@@ -61,7 +61,8 @@ public class RunPaymentsAPP {
 							register();
 							
 						
-				         }else if(optStr.equalsIgnoreCase("2")) {if(currentUserid==-1) {
+				         }else if(optStr.equalsIgnoreCase("2")) 
+				         {if(currentUserid==-1) {
 				 			System.out.println("enter user to credentials to login");
 							System.out.println();
 							System.out.println("enter userid");
@@ -79,7 +80,7 @@ public class RunPaymentsAPP {
 		
 							
 						}else if(optStr.equalsIgnoreCase("3")) {
-							
+							addBankAccount();
 							
 						}else if(optStr.equalsIgnoreCase("4")) {
 //						ops.printUserList(userList);
@@ -99,7 +100,7 @@ public class RunPaymentsAPP {
 //			}
 		}
 public static void register() {
-     tr{
+     try{
 	System.out.println("Please do provide user details as asked:");
 	System.out.println("First Name:");
 	String fName = opt.next();
@@ -138,6 +139,21 @@ public static void register() {
 		else {
 			System.out.println("if you want to login into another account logout from current account");
 		}
+		
+	}
+	
+	private static void addBankAccount() {
+		BankAccount ba=new BankAccount();
+		Scanner opt = new Scanner(System.in);
+		System.out.println("Enter BankAccout ditals");
+		System.out.println("Enter bankAcctNumber");
+	    String bankAccNumber=opt.nextInt();
+		System.out.println("Enter bankAcctBankName");
+		String bankAccBankName=opt.nextInt();
+		System.out.println("Enter bankAcctIFSC");
+		String bankAccIFSC=opt.nextInt();
+		System.out.println("Select bankAcctAcct Type from below");
+		
 		
 	}
 
