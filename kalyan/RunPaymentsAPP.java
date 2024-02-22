@@ -58,59 +58,28 @@ public class RunPaymentsAPP {
 						UserOperations ops = new UserOperations();
 //					    userList = null;
 						if(optStr.equalsIgnoreCase("1")) {
-							System.out.println("Please do provide user details as asked:");
-							System.out.println("First Name:");
-							String fName = opt.next();
-							System.out.println("Last Name:");
-							String lName = opt.next();
-							System.out.println("Phone Number:");
-							long phNo = Long.parseLong(opt.next());
-							System.out.println("Date Of Birth:");
-							String dob = opt.next();
-							System.out.println("Address:");
-							String addr = opt.next();
-							System.out.println("Password:");
-							String password = opt.next();
-							
-							User u;
-							try {
-								u = ops.doUserRegistration(fName, lName, password, phNo, dob, addr);
-								usersList.add(u);
-							} catch (Exception e) {
-								e.printStackTrace();
-							}
-//
-//							User u = ops.doUserRegistration(fName, lName, password, phNo, dob, addr);
-//							System.out.println(u);
-//						   	for(int i=0;i<userList.size();i++) {
-//								if(userList.get(i)==null) {
-//									userList.get(i).setUserId(i);
-//									break;
-//									
-//								}
-//							}
+							register();
 							
 						
-				         }else if(optStr.equalsIgnoreCase("2")) {
+				         }else if(optStr.equalsIgnoreCase("2")) {if(currentUserid==-1) {
+				 			System.out.println("enter user to credentials to login");
+							System.out.println();
+							System.out.println("enter userid");
+							int userid=opt.nextInt();
+							System.out.println("enter password");
+							String password=opt.next();
+							 UserOperations ops = new UserOperations();
+							 ops.userLogin(userid,password);
+						}
+						else {
+							System.out.println("if you want to login into another account logout from current account");
+						}
 				        	 
-				        	 Scanner opt1 = new Scanner(System.in);
-				        	 UserOperations ops1 = new UserOperations();
-				        		System.out.println("user ID:");
-				        		String userid=opt.next();
-								System.out.println("password:");
-								String password = opt.next();
-								
-								if(ops.verifyUserLogin(uId, password)) {
-									currUserId = Integer.parseInt(uId);
-									return;
-								}else {
-									System.out.println("Login Failed, Please Choose an Option:");
-									//break;
-									return;
-								}
-								
+				        	
+		
 							
 						}else if(optStr.equalsIgnoreCase("3")) {
+							
 							
 						}else if(optStr.equalsIgnoreCase("4")) {
 //						ops.printUserList(userList);
@@ -129,8 +98,47 @@ public class RunPaymentsAPP {
 //							e.printStackTrace();
 //			}
 		}
+public static void register() {
+     tr{
+	System.out.println("Please do provide user details as asked:");
+	System.out.println("First Name:");
+	String fName = opt.next();
+	System.out.println("Last Name:");
+	String lName = opt.next();
+	System.out.println("Phone Number:");
+	long phNo = Long.parseLong(opt.next());
+	System.out.println("Date Of Birth:");
+	String dob = opt.next();
+	System.out.println("Address:");
+	String addr = opt.next();
+	System.out.println("Password:");
+	String password = opt.next();
+	       UserOperations ops = new UserOperations();
+	User u = ops.doUserRegistration(fName, lName, password, phNo, dob, addr);
+		wallet =new wallet();
+		usersList.add(u);
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
+}
 		
 		
-			
+	private static void login() {
+		Scanner opt = new Scanner(System.in);
+		if(currentUserid==-1) {
+			System.out.println("enter user to credentials to login");
+			System.out.println();
+			System.out.println("enter userid");
+			int userid=opt.nextInt();
+			System.out.println("enter password");
+			String password=opt.next();
+			 UserOperations ops = new UserOperations();
+			 ops.userLogin(userid,password);
+		}
+		else {
+			System.out.println("if you want to login into another account logout from current account");
+		}
+		
+	}
 
 	
