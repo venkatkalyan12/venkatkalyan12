@@ -1,6 +1,9 @@
 package kalyan;
 
-import java.util.*;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 public class RunPaymentsAPP {
 	
@@ -53,70 +56,51 @@ public class RunPaymentsAPP {
 						}
 						
 						System.out.println("User selected "+selectedOption);
-						
-						
 						UserOperations ops = new UserOperations();
 //					    userList = null;
 						if(optStr.equalsIgnoreCase("1")) {
 							register();
 							
 						
-				         }else if(optStr.equalsIgnoreCase("2")) 
-				         {if(currentUserid==-1) {
-				 			System.out.println("enter user to credentials to login");
-							System.out.println();
-							System.out.println("enter userid");
-							int userid=opt.nextInt();
-							System.out.println("enter password");
-							String password=opt.next();
-							 UserOperations ops = new UserOperations();
-							 ops.userLogin(userid,password);
-						}
-						else {
-							System.out.println("if you want to login into another account logout from current account");
-						}
-				        	 
-				        	
-		
-							
-						}else if(optStr.equalsIgnoreCase("3")) {
+				         }else if(optStr.equalsIgnoreCase("2")) { 
+				        	   login();
+						 }else if(optStr.equalsIgnoreCase("3")) {
 							addBankAccount();
 							
 						}else if(optStr.equalsIgnoreCase("4")) {
+							ops.printUserList( );
 //						ops.printUserList(userList);
 						}else if(optStr.equalsIgnoreCase("5")) {
-							
+							 ops.currentUser();
 						}else if(optStr.equalsIgnoreCase("6")) {
-							
+							addMoney();
 						}else if(optStr.equalsIgnoreCase("-1")) {
 							break;
 						}else {
 							
-						}
 					}
-			} 
-//	catch (NumberFormatException e) {
-//							e.printStackTrace();
-//			}
-		}
+						}
+			
+	}
+		
 public static void register() {
      try{
+    	 Scanner opt1 = new Scanner(System.in);
 	System.out.println("Please do provide user details as asked:");
 	System.out.println("First Name:");
-	String fName = opt.next();
+	String fName = opt1.next();
 	System.out.println("Last Name:");
-	String lName = opt.next();
+	String lName = opt1.next();
 	System.out.println("Phone Number:");
-	long phNo = Long.parseLong(opt.next());
+	long phNo = Long.parseLong(opt1.next());
 	System.out.println("Date Of Birth:");
-	String dob = opt.next();
+	String dob = opt1.next();
 	System.out.println("Address:");
-	String addr = opt.next();
+	String addr = opt1.next();
 	System.out.println("Password:");
-	String password = opt.next();
+	String password = opt1.next();
 	       UserOperations ops = new UserOperations();
 	User u = ops.doUserRegistration(fName, lName, password, phNo, dob, addr);
-		wallet =new wallet();
 		usersList.add(u);
 	} catch (Exception e) {
 		e.printStackTrace();
@@ -126,7 +110,7 @@ public static void register() {
 		
 	private static void login() {
 		Scanner opt = new Scanner(System.in);
-		if(currentUserid==-1) {
+		if(currUserId==-1) {
 			System.out.println("enter user to credentials to login");
 			System.out.println();
 			System.out.println("enter userid");
@@ -134,7 +118,7 @@ public static void register() {
 			System.out.println("enter password");
 			String password=opt.next();
 			 UserOperations ops = new UserOperations();
-			 ops.userLogin(userid,password);
+			 ops.userLogIn(userid,password);
 		}
 		else {
 			System.out.println("if you want to login into another account logout from current account");
@@ -147,13 +131,67 @@ public static void register() {
 		Scanner opt = new Scanner(System.in);
 		System.out.println("Enter BankAccout ditals");
 		System.out.println("Enter bankAcctNumber");
-	    String bankAccNumber=opt.nextInt();
+	    String bankAccNumber=opt.next();
 		System.out.println("Enter bankAcctBankName");
-		String bankAccBankName=opt.nextInt();
+		String bankAccBankName=opt.next();
 		System.out.println("Enter bankAcctIFSC");
-		String bankAccIFSC=opt.nextInt();
+		String IFSC=opt.next();
 		System.out.println("Select bankAcctAcct Type from below");
+		for(AcctType type : AcctType.values()) {
+			System.out.println("      "+type);
+		}
+		String actType = opt.next();
+		BankAccount bankAccount = null;
+		try {
+			AcctType acctType = AcctType.valueOf(actType);
+			bankAccount.setAcctType(acctType);
+		}
+		catch(IllegalArgumentException e) {
+			System.out.println("User should enter only one of the following values");
+			for(AcctType type : AcctType.values()) {
+				System.out.println("      "+type);
+			}
+		}
+	 
 		
+		System.out.println("Enter Account Pin");
+		String pin = opt.next();
+		
+		 
+		bankAccount.setBankName(bankAccBankName);
+		bankAccount.setAcctNumber(actType);
+		bankAccount.setIFSC(IFSC);
+		bankAccount.setAcctPin(pin);
+		bankAccount.setUserid(currUserId);
+		
+	}
+
+private static void addMoney() {
+		
+		if(currUserId!=-1) {
+		
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Enter amount : ");
+		double amount = sc.nextDouble();
+		if(amount <=10000.00) {
+			wallet wallet = new wallet();
+			wallet.setBalance(wallet.getBalance()+amount);
+			System.out.println("your current balance is "+wallet.getBalance());
+		}
+		else {
+			System.out.println("Maximum deposit is 10,000 ");
+		}
+	 
+		 
+	}
+		else {
+			System.out.println("user must log in to add money to wallet");
+		}
+	}
+	private static void logout() {
+		currUserId = -1;
+	}
+
 		
 	}
 

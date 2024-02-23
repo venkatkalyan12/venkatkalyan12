@@ -1,64 +1,46 @@
 package kalyan;
 
 public class BankAccount {
-
-		private String bankAcctNumber;
-		public String getBankAcctNumber() {
-			return bankAcctNumber;
-		}
-
-		public void setBankAcctNumber(String bankAcctNumber) {
-			this.bankAcctNumber = bankAcctNumber;
-		}
-
-		public String getBankAcctBankName() {
-			return bankAcctBankName;
-		}
-
-		public void setBankAcctBankName(String bankAcctBankName) {
-			this.bankAcctBankName = bankAcctBankName;
-		}
-
-		public String getBankAcctIFSC() {
-			return bankAcctIFSC;
-		}
-
-		public void setBankAcctIFSC(String bankAcctIFSC) {
-			this.bankAcctIFSC = bankAcctIFSC;
-		}
-
-		public AcctType getBankAcctAcctType() {
-			return bankAcctAcctType;
-		}
-
-		public void setBankAcctAcctType(AcctType bankAcctAcctType) {
-			this.bankAcctAcctType = bankAcctAcctType;
-		}
-
-		public String getBankAcctPin() {
-			return bankAcctPin;
-		}
-
-		public void setBankAcctPin(String bankAcctPin) {
-			this.bankAcctPin = bankAcctPin;
-		}
-
-		public int getUserId() {
-			return userId;
-		}
-
-		public void setUserId(int userId) {
-			this.userId = userId;
-		}
-
-		private String bankAcctBankName;
-		private String bankAcctIFSC;
-		private AcctType bankAcctAcctType;
-		private String bankAcctPin;
-
-		private int userId;
-
-	
+	private String acctNumber;
+	private String IFSC;
+	private String acctPin;
+	private String bankName;
+	private AcctType acctType;
+	private int userid;
+	public String getAcctNumber() {
+		return acctNumber;
 	}
-
-
+	public void setAcctNumber(String acctNumber) {
+		this.acctNumber = acctNumber;
+	}
+	public String getIFSC() {
+		return IFSC;
+	}
+	public void setIFSC(String iFSC) {
+		IFSC = iFSC;
+	}
+	public String getAcctPin() {
+		return acctPin;
+	}
+	public void setAcctPin(String acctPin) {
+		this.acctPin = acctPin;
+	}
+	public String getBankName() {
+		return bankName;
+	}
+	public void setBankName(String bankName) {
+		this.bankName = bankName;
+	}
+	public AcctType getAcctType() {
+		return acctType;
+	}
+	public void setAcctType(AcctType acctType) {
+		this.acctType = acctType;
+	}
+	public int getUserid() {
+		return userid;
+	}
+	public void setUserid(int userid) {
+		this.userid = userid;
+	}
+}

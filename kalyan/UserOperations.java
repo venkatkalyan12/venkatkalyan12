@@ -2,8 +2,9 @@ package kalyan;
 
 import java.util.List;
 import java.util.Vector;
-
+import java.util.*;
 public class UserOperations {
+	 List<User>list = RunPaymentsAPP.usersList;
 public User doUserRegistration(String fName, String lName, String password, long phNum, String dob,String addr) {
 //	Vector vc=new Vector();
 //    vc.add("fName");
@@ -20,47 +21,45 @@ public User doUserRegistration(String fName, String lName, String password, long
 	u.setCommunicationAddr(addr);
 	u.setPassword(password);
 	
-	u.setUserId( (int) ((Math.random()*1000)+500));
+	u.setUserId();
 	return u;
+	
+//	FileOps fileOps = new FileOps();
+//	fileOps.userToFile(u);
+//	return u;
 }
-public void printUserList(List<User> users){
-	for(User u:users) {
-		if(users != null) {
-			System.out.println("User Details of "+ u.getFirstName());
-			System.out.println(u);
+
+public void printUserList( ){
+ for(User u : list) {
+	 System.out.println(u);
+ }
+}
+
+public void currentUser() {
+	if(RunPaymentsAPP.currUserId==-1) {
+		System.out.println("No user logged in");
+	}
+	 for(User u : list) {
+		 if(RunPaymentsAPP.currUserId == u.getUserId()) {
+			 System.out.println(u.getFirstName()+" "+u.getLastName());
+		 }
+		 else {
+			 System.out.println("please enter valid credentials");
+		 }
+	 }
+	
+}
+
+public void userLogIn(int userId, String password) {
+	for(User u : list) {
+		if(u.getUserId()==userId&&u.getPassword( ).equals(password))
+			System.out.println("welcome Mr."+u.getFirstName()+" "+u.getLastName());
+		   RunPaymentsAPP.currUserId = userId;
 		}
 	}
-}
-
-//public void printUserList(List<User> userlist){
-//	for(int i=0;i<userlist.size();i++) {
-//		if(userlist.get(i) != null) {
-//			System.out.println("User Details of "+ userlist.get(i).getFirstName());
-//			System.out.println(userlist.get(i));
-//		}
-//		
-//	}
-//}
-
-//int i=0;
-//public void verifyuserid(String userId,String password,List<User> Users) {
-//	if(String.valueOf(Users.get(i).equals(userId))!= null) {
-//		if(password.equals(password)) {
-//			return;
-//}
-//	}
-//}
+	 
+	
 
 
-public boolean verifyUserLogin(String uid, String password) {
-	List<User> users;
-	for(int i=0;i<users.size();i++) {
-		if(String.valueOf(users.get(i).getUserId()).equals(userId)) {
-			if(password.equals(users.get(i).getPassword())) {
-				return true;
-			}
-		}
-	}
-	return false;
-}
+
 }

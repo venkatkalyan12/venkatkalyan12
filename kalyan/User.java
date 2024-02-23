@@ -1,7 +1,19 @@
 package kalyan;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class User {
 	private String firstName;
+	private String lastName;
+	private long phoneNum;
+	private String dateOfBirth;
+	private String communicationAddr;
+	private List<BankAccount> bankList = new ArrayList<BankAccount>();
+	
+	private int userId;
+	private String password;
+	
 	public String getFirstName() {
 		return firstName;
 	}
@@ -35,8 +47,11 @@ public class User {
 	public int getUserId() {
 		return userId;
 	}
-	public void setUserId(int userId) {
-		this.userId = userId;
+	public void setUserId( ) {
+		this.userId =  (int) (Math.random()*1000+100);
+	}
+	public void setUserId(int id ) {
+		this.userId =  id;
 	}
 	public String getPassword() {
 		return password;
@@ -44,18 +59,16 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	private String lastName;
-	private long phoneNum;
-	private String dateOfBirth;
-	private String communicationAddr;
 	
-	private int userId;
-	private String password;
+//	BankAccount[]
 	@Override
 	public String toString() {
 		return this.userId+":"+ this.firstName +":"+ this.lastName + ":"+this.phoneNum+":"+this.dateOfBirth+":"+this.communicationAddr;
 	}
 	
-	
+//	public String toFile() {
+//		return this.userId+","+ this.firstName +","+ this.lastName + ","+this.phoneNum+","+this.dateOfBirth+","+this.communicationAddr+"\n";
+//	}
 
 }
+	
