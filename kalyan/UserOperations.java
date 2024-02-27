@@ -34,6 +34,11 @@ public User doUserRegistration(String fName, String lName, String password, long
 //      return email.contains("@") && email.endsWith("gmail.com");
   }
 
+	
+//	FileOps fileOps = new FileOps();
+//	fileOps.userToFile(u);
+//	return u;
+
 
 public void printUserList( ){
  for(User u : list) {

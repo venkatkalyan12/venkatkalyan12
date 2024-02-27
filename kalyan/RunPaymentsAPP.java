@@ -181,7 +181,7 @@ private static void addMoney() {
 			System.out.println("your current balance is "+wallet.getBalance());
 		}
 		else {
-			System.out.println("Maximum deposit is 20,000 ");
+			System.out.println("Maximum deposit is 10,000 ");
 		}
 	 
 		 
