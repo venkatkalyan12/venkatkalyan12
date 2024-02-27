@@ -7,6 +7,14 @@ public class User {
 	private String firstName;
 	private String lastName;
 	private long phoneNum;
+	private String gmail;
+	public String getGmail() {
+		return gmail;
+	}
+	public void setGmail(String gmail) {
+		this.gmail = gmail;
+	}
+
 	private String dateOfBirth;
 	private String communicationAddr;
 	private List<BankAccount> bankList = new ArrayList<BankAccount>();
@@ -60,15 +68,34 @@ public class User {
 		this.password = password;
 	}
 	
+	public void setGmail1(String gmail) {
+		 if (isValidGmail(getGmail())) {
+	            System.out.println("Valid Gmail address!");
+	        } else {
+	            System.out.println("Invalid Gmail address.");
+	        }
+	    }
+	  
+		public static boolean isValidGmail(String email) {
+	        return email.contains("@") && email.endsWith("gmail.com");
+		}
+	
 //	BankAccount[]
 	@Override
 	public String toString() {
-		return this.userId+":"+ this.firstName +":"+ this.lastName + ":"+this.phoneNum+":"+this.dateOfBirth+":"+this.communicationAddr;
+		return this.userId+":"+ this.firstName +":"+ this.lastName + ":"+this.phoneNum+":"+this.gmail+":"+this.dateOfBirth+":"+this.communicationAddr;
 	}
+	
+	    }
+
+     
+
+		
+	
 	
 //	public String toFile() {
 //		return this.userId+","+ this.firstName +","+ this.lastName + ","+this.phoneNum+","+this.dateOfBirth+","+this.communicationAddr+"\n";
 //	}
 
-}
+
 	

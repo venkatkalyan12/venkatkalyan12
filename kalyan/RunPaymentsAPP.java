@@ -93,6 +93,8 @@ public static void register() {
 	String lName = opt1.next();
 	System.out.println("Phone Number:");
 	long phNo = Long.parseLong(opt1.next());
+	System.out.println("gmail:");
+	String gmail = opt1.next();
 	System.out.println("Date Of Birth:");
 	String dob = opt1.next();
 	System.out.println("Address:");
@@ -100,7 +102,7 @@ public static void register() {
 	System.out.println("Password:");
 	String password = opt1.next();
 	       UserOperations ops = new UserOperations();
-	User u = ops.doUserRegistration(fName, lName, password, phNo, dob, addr);
+	User u = ops.doUserRegistration(fName, lName, password,phNo, gmail, dob, addr);
 		usersList.add(u);
 	} catch (Exception e) {
 		e.printStackTrace();
@@ -173,7 +175,7 @@ private static void addMoney() {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Enter amount : ");
 		double amount = sc.nextDouble();
-		if(amount <=10000.00) {
+		if(amount <=20000.00) {
 			wallet wallet = new wallet();
 			wallet.setBalance(wallet.getBalance()+amount);
 			System.out.println("your current balance is "+wallet.getBalance());

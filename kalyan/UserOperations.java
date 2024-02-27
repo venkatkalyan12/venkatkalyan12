@@ -5,7 +5,7 @@ import java.util.Vector;
 import java.util.*;
 public class UserOperations {
 	 List<User>list = RunPaymentsAPP.usersList;
-public User doUserRegistration(String fName, String lName, String password, long phNum, String dob,String addr) {
+public User doUserRegistration(String fName, String lName, String password, long phNum,String gmail, String dob,String addr) {
 //	Vector vc=new Vector();
 //    vc.add("fName");
 //    vc.add("lName");
@@ -17,17 +17,28 @@ public User doUserRegistration(String fName, String lName, String password, long
 	u.setFirstName(fName);
 	u.setLastName(lName);
 	u.setPhoneNum(phNum);
+	u.setGmail(gmail);
 	u.setDateOfBirth(dob);
 	u.setCommunicationAddr(addr);
 	u.setPassword(password);
 	
 	u.setUserId();
 	return u;
+//	  if (isValidGmail(gmail)) {
+//          System.out.println("Valid Gmail address!");
+//      } else {
+//          System.out.println("Invalid Gmail address")
+//      }
+//  
+//  public static boolean isValidGmail(String email) {
+//      return email.contains("@") && email.endsWith("gmail.com");
+  }
+
 	
 //	FileOps fileOps = new FileOps();
 //	fileOps.userToFile(u);
 //	return u;
-}
+
 
 public void printUserList( ){
  for(User u : list) {
@@ -57,7 +68,7 @@ public void userLogIn(int userId, String password) {
 		   RunPaymentsAPP.currUserId = userId;
 		}
 	}
-	 
+
 	
 
 
