@@ -6,13 +6,7 @@ import java.util.*;
 public class UserOperations {
 	 List<User>list = RunPaymentsAPP.usersList;
 public User doUserRegistration(String fName, String lName, String password, long phNum,String gmail, String dob,String addr) {
-//	Vector vc=new Vector();
-//    vc.add("fName");
-//    vc.add("lName");
-//    vc.add("password");
-//    vc.add("phNo");
-//    vc.add("dob");
-//    vc.add("addr");
+
 	User u = new User();
 	u.setFirstName(fName);
 	u.setLastName(lName);
@@ -47,13 +41,15 @@ public void printUserList( ){
 }
 
 public void currentUser() {
-	if(RunPaymentsAPP.currUserId==-1) {
-		System.out.println("No user logged in");
-	}
 	 for(User u : list) {
 		 if(RunPaymentsAPP.currUserId == u.getUserId()) {
 			 System.out.println(u.getFirstName()+" "+u.getLastName());
 		 }
+		 
+		 if(RunPaymentsAPP.currUserId==-1) {
+				System.out.println("No user logged in");
+			}
+		 
 		 else {
 			 System.out.println("please enter valid credentials");
 		 }
@@ -68,9 +64,5 @@ public void userLogIn(int userId, String password) {
 		   RunPaymentsAPP.currUserId = userId;
 		}
 	}
-
-	
-
-
-
 }
+

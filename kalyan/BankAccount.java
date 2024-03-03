@@ -1,13 +1,15 @@
 package kalyan;
 
 public class BankAccount {
-	private String acctNumber;
+//	int balance;
+//	int previousTranscation;
+	private static String acctNumber;
 	private String IFSC;
-	private String acctPin;
+	private static String acctPin;
 	private String bankName;
 	private AcctType acctType;
 	private int userid;
-	public String getAcctNumber() {
+	public static String getAcctNumber() {
 		return acctNumber;
 	}
 	public void setAcctNumber(String acctNumber) {
@@ -19,7 +21,7 @@ public class BankAccount {
 	public void setIFSC(String iFSC) {
 		IFSC = iFSC;
 	}
-	public String getAcctPin() {
+	public static String getAcctPin() {
 		return acctPin;
 	}
 	public void setAcctPin(String acctPin) {
@@ -42,5 +44,13 @@ public class BankAccount {
 	}
 	public void setUserid(int userid) {
 		this.userid = userid;
+	}
+	public double getBalance() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	public void setBalance(double d) {
+		// TODO Auto-generated method stub
+		
 	}
 }
