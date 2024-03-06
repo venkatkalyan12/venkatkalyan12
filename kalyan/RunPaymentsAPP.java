@@ -248,29 +248,7 @@ public static BankAccount getBankAccountByUserId(int userId) {
 
 
 private static void performTransaction(int userId) {
-//    Scanner opt = new Scanner(System.in);
-//    System.out.println("Enter transaction amount: ");
-//    double amount = opt.nextDouble();
-//
-//    System.out.println("Select transaction type (1: Deposit, 2: Withdrawal): ");
-//    int typeOption = opt.nextInt();
-//
-//    TransactionType transactionType = (typeOption == 1) ? 
-//    		TransactionType.DEPOSIT : TransactionType.WITHDRAWAL;
-//
-//    
-//    Transaction transaction = new Transaction();
-//
-//    
-//    transactionType.add(transaction);
-//
-//    
-//    System.out.println("Transaction successful:");
-//    
-//    System.out.println(transaction);
-//}
-//
-//
+
 	 Scanner opt = new Scanner(System.in);
 
 	    System.out.println("Enter transaction amount: ");
