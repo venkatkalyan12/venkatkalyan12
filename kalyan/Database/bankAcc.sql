@@ -3,7 +3,7 @@ CREATE TABLE `bankaccount` (
   `BankAccNum` int NOT NULL,
   `Bank_Name` varchar(50) NOT NULL,
   `IFSC_Code` varchar(40) NOT NULL,
-  `Acc_Type` varchar(45) NOT NULL,
+  `Acc_Type` enum('SAVINGS','SALARY','LOAN','CURRENT') NOT NULL,
   `BankAccount_pin` int NOT NULL,
   `Acc_Balance` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`BankAccNum`),
