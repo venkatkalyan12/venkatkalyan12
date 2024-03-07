@@ -8,5 +8,5 @@ CREATE TABLE `bankaccount` (
   `Acc_Balance` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`BankAccNum`),
   UNIQUE KEY `BankAccNum_UNIQUE` (`BankAccNum`),
-  CONSTRAINT `User_id` FOREIGN KEY (`BankAccNum`) REFERENCES `users` (`User_id`)
+  CONSTRAINT `BankAccNum` FOREIGN KEY (`User_id`) REFERENCES `users` (`User_id`)
 )
