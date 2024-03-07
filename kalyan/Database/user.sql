@@ -3,7 +3,7 @@ CREATE TABLE `users` (
   `Firstt_Name` VARCHAR(45) NULL,
   `Last_Name` VARCHAR(45) NULL,
   `Date_Of_Birth` DATE NULL,
-  `Phone_Number` VARCHAR(12) NULL,
+  `Phone_Number` int(12) NULL,
   `Address` VARCHAR(45) NULL,
-  `PassWord` VARCHAR(45) NULL,
+  `PassWord` CHAR(20) NULL,
   PRIMARY KEY (`User_id`));
