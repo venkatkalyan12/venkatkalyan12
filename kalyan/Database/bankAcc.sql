@@ -7,7 +7,7 @@ CREATE TABLE User_Details (
   Date_Of_Birth date NOT NULL,
   Phone_Number varchar(15) NOT NULL,
   Address varchar(80) NOT NULL,
-  PassWord int(25)  NOT NULL,
+  PassWord int(12)  NOT NULL,
   PRIMARY KEY (User_id)
 );
 describe User_Details;
