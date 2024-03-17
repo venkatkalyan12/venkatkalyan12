@@ -7,9 +7,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.sql.SQLException;
 
 import kalyan.entity.AcctType;
 import kalyan.entity.BankAccount;
+import kalyan.entity.SQLCONNECTION;
 import kalyan.entity.Transaction;
 import kalyan.entity.TransactionType;
 import kalyan.entity.User;
@@ -23,13 +25,17 @@ public class RunPaymentsAPP {
 	public static Map<Integer, wallet> walletList = new HashMap<Integer,wallet>();
 	public static List<BankAccount> bankAcctList = new ArrayList<BankAccount>();
 	public static int currUserId = -1;
-
+	
+	static BankAccount ba=new BankAccount();
+	
+	private static double amount;
+	static int currentUserId = -1;
 //	private static List<User> userList;
 //	public static User[] userList=new User[6];
 //	Vector vc=new Vector();
 	public static void main (String[] args) {
 	
-//		Transcation TXN=new Transcation();
+
 
 			int selectedOption=0;	
 	
@@ -85,13 +91,14 @@ public class RunPaymentsAPP {
 						
 				         }else if(optStr.equalsIgnoreCase("2")) { 
 				        	   login();
+				         }else if(optStr.equalsIgnoreCase("-1")) {
+								System.out.println("No user logged in");
+								break;
 						 }else if(optStr.equalsIgnoreCase("3")) {
 							 userId = login();
 							addBankAccount();
-							  linkBankAccountToUser(currUserId, bankAcctList.size() - 1);
 						}else if(optStr.equalsIgnoreCase("4")) {
 							ops.printUserList( );
-//						ops.printUserList(userList);
 						}else if(optStr.equalsIgnoreCase("5")) {
 							 ops.currentUser();
 						}else if(optStr.equalsIgnoreCase("6")) {
@@ -101,21 +108,25 @@ public class RunPaymentsAPP {
 						System.out.println("your current balance is "+wallet.getBalance());
 						
 						}else if(optStr.equalsIgnoreCase("8")) {
+							 userId = login();
+							System.out.println("BANKACCOUNT===" + ba.printBankAcctDetails());
 						}else if(optStr.equalsIgnoreCase("9")) {
+							 userId = login();
+							SelfTransaction();
 						}else if(optStr.equalsIgnoreCase("10")) {
-//							userId = login();
-//							deposit(userId);
 							 userId = login();
 				                performTransaction(userId);
 						}else if(optStr.equalsIgnoreCase("11")) {
+							 System.out.println("Updated bank account balance: " + BankAccount.getBalance());
 						}else if(optStr.equalsIgnoreCase("12")) {
 						}else if(optStr.equalsIgnoreCase("13")) {
-						}else if(optStr.equalsIgnoreCase("-1")) {
-							break;
+						
+					
 						}else {
 							
 					}
 						}
+				opt.close();
 			
 	}
 		
@@ -141,6 +152,14 @@ public static int register() {
 	       UserOperations ops = new UserOperations();
 	User u = ops.doUserRegistration(fName, lName, password,phNo, gmail, dob, addr);
 	int userId = u.getUserId();
+	
+	try {
+		SQLCONNECTION SqlCon = new SQLCONNECTION();
+		SQLCONNECTION.UserTODB(u);
+	}catch(Exception e){
+		e.printStackTrace();
+	}
+	
 		usersList.add(u);
 		ops.printUserList( );
 		return userId;
@@ -172,6 +191,8 @@ public static int register() {
 		
 	}
 	
+	
+
 	private static void addBankAccount() {
 		BankAccount ba=new BankAccount();
 		Scanner opt = new Scanner(System.in);
@@ -215,19 +236,32 @@ public static int register() {
 
 	    System.out.println("Bank account added successfully.");
 	    
-		linkBankAccountToUser(currUserId, bankAcctList.size() - 1);
+	    try {
+			SQLCONNECTION SqlCon = new SQLCONNECTION();
+			SqlCon.addAccountToDB(ba);
+		
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	    
 	
 	}
-	 private static void linkBankAccountToUser(int userId, int acctNumber) {
-	        if (userId != -1 && acctNumber >= 0 && acctNumber < bankAcctList.size()) {
-	            BankAccount bankAccount = bankAcctList.get(acctNumber);
-	            bankAccount.setUserid(userId);
-	            System.out.println("Bank Account linked to User successfully.");
-	        } else {
-	            System.out.println("Invalid user ID or bank account ID.");
-	        }
-	    }
 	
+	public static void PrintCurrUserBankaccountList() {
+		UserOperations ops = new UserOperations();
+		Map<User,List<BankAccount>> mapItems = ops.getBankAccountList();
+		for(User u : mapItems.keySet()) {
+			List<BankAccount> baList = mapItems.get(u);
+			System.out.println(u);
+			if(baList != null) {
+				for(BankAccount ba : baList) {
+					System.out.println("-->" + ba.printBankAcctDetails());
+				}
+			}
+		}
+		
+	}
+
 	 
 private static void addMoney() {
 		
@@ -251,6 +285,9 @@ private static void addMoney() {
 			System.out.println("user must log in to add money to wallet");
 		}
 	}
+private static void logout() {
+	currentUserId = -1;
+}
 
 public static BankAccount getBankAccountByUserId(int userId) {
 	for (BankAccount bankAccount : bankAcctList) {
@@ -261,58 +298,216 @@ public static BankAccount getBankAccountByUserId(int userId) {
     return null;
 }
 
-//if (bankAccount != null) {
-//    System.out.println("User's bank account found: " + BankAccount.getAcctNumber());
-//    System.out.println("Account Pin: " + BankAccount.getAcctPin());
-//} else {
-//    System.out.println("User's bank account not found.");
-//}
-//return 0;
-//}
 
+public static void SelfTransaction() {
+	
+	int selectedOption=0;	
+	Scanner st = new Scanner(System.in);
+	
+	System.out.println("1.Wallet To BankAccount");
+	System.out.println("2.BankAccount To Wallet");
+
+	String op = st.next();
+	
+	try {
+		selectedOption = Integer.parseInt(op);
+	}catch(Exception e) {
+		e.printStackTrace();
+		e.getMessage();
+		System.out.println("Some Error Occured Please choose another option.");
+	}finally{
+		System.out.println();
+	}
+	System.out.println("User selected "+selectedOption);
+	UserOperations ops = new UserOperations();
+	
+
+	if(op.equalsIgnoreCase("1")) {
+		Wallet_To_BA();
+    }else if(op.equalsIgnoreCase("2")) { 
+    	BA_To_Wallet();
+	 } 
+}
+public static void Wallet_To_BA() {
+
+
+	       
+	        Transaction transaction = new Transaction();
+	        Date date = new Date();
+	        BankAccount ba=new BankAccount();
+	        wallet wa = new wallet();
+	      
+	        Scanner scanner = new Scanner(System.in);
+	        System.out.println("Enter the amount to transfer from wallet to bank account:");
+	        double amount = scanner.nextDouble();
+
+	        if (wa.getBalance() >= amount) {
+     	
+	            transaction.setAmount(amount);
+	            transaction.setTimestamp(date);
+	            transaction.setTransactionId(date.getTime());
+	            ba.addBalance(amount);
+	            wa.deductBalance(amount);
+	            ba.setBalance(ba.getBalance() + amount);
+	            System.out.println("Transaction successful!");
+	        } else {
+	            System.out.println("Insufficient balance in wallet!");
+	        }
+
+	        System.out.println("Updated wallet balance: " + wa.getBalance());
+	        System.out.println("Updated bank account balance: " + ba.getBalance());
+
+	    }
+
+public static void BA_To_Wallet() {
+	   Transaction transaction = new Transaction();
+       Date date = new Date();
+       BankAccount ba=new BankAccount();
+       wallet wa = new wallet();
+     
+       Scanner scanner = new Scanner(System.in);
+       System.out.println("Enter the amount to transfer from BANK ACCOUNT to WALLET:");
+       double amount = scanner.nextDouble();
+
+       if (ba.getBalance() >= amount) {
+	
+           transaction.setAmount(amount);
+           transaction.setTimestamp(date);
+           transaction.setTransactionId(date.getTime());
+           wa.addBalance(amount);
+           ba.deductBalance(amount);
+           wa.setBalance(wa.getBalance() + amount);
+           System.out.println("Transaction successful!");
+       } else {
+           System.out.println("Insufficient balance in wallet!");
+       }
+
+       System.out.println("Updated wallet balance: " + wa.getBalance());
+       System.out.println("Updated bank account balance: " + ba.getBalance());
+
+   }
 
 private static void performTransaction(int userId) {
 
-	 Scanner opt = new Scanner(System.in);
+	int selectedOption=0;	
+	Scanner Ts = new Scanner(System.in);
+	 Transaction tr = new Transaction();
+     Date date = new Date();
+     BankAccount ba=new BankAccount();
+     wallet wa = new wallet();
 	 
-	  System.out.println("Select transaction type (1: Deposit, 2: Withdrawal): ");
-	    int typeOption = opt.nextInt();
+	 tr.setTransactionType(TransactionType.DEBIT);
+	 System.out.println("Select which type of transfer you want to perform");
+	 System.out.println("1.Wallet to Wallet");
+	 System.out.println("2.Bank to Bank");
+	 System.out.println("3.Bank to Wallet");
+	 System.out.println("4.Wallet to Bank");
 
-	    TransactionType transactionType = (typeOption == 1) ? TransactionType.DEPOSIT : TransactionType.WITHDRAWAL;
-	    BankAccount userBankAccount = getBankAccountByUserId(userId);
-
-	    System.out.println("Enter transaction amount: ");
-	    double amount = opt.nextDouble();
-	    Transaction transaction = new Transaction();
-   	 Transaction.setAmount(kalyan.entity.Transaction.getAmount()+amount);
-   	 System.out.println("your current balance is "+Transaction.getAmount());
-
-	  
-	    if (userBankAccount != null) {
-	        // Check if there is enough balance for withdrawal
-	        if (transactionType == TransactionType.WITHDRAWAL && amount > userBankAccount.getBalance()) {
-	            System.out.println("Insufficient funds. Transaction failed.");
-	        } else {
-	            // Add the transaction
-//	            transactionType.add(amount);
-	        	   transactionType.add(transactionType);
-	        	 //
-
-	         
-	            if (transactionType == TransactionType.DEPOSIT) {
-	                userBankAccount.setBalance(userBankAccount.getBalance() + amount);
-	            } else {
-	                userBankAccount.setBalance(userBankAccount.getBalance() - amount);
-	            }
-
-	            System.out.println("Transaction successful. Updated balance: " + userBankAccount.getBalance());
-	        }
-	    } else {
-	        System.out.println("User's bank account not found. Transaction failed.");
-	    }
+	String op = Ts.next();
+	
+	try {
+		selectedOption = Integer.parseInt(op);
+	}catch(Exception e) {
+		e.printStackTrace();
+		e.getMessage();
+		System.out.println("Some Error Occured Please choose another option.");
+	}finally{
+		System.out.println();
 	}
-//
-//		
+	System.out.println("User selected "+selectedOption);
+	UserOperations ops = new UserOperations();
+	
+
+	if(op.equalsIgnoreCase("1")) {
+		Wallet_To_Wallet();
+    }else if(op.equalsIgnoreCase("2")) { 
+    	BAnk_To_BANK();
+	 } else if(op.equalsIgnoreCase("3")) {
+		 BANK_TO_WALLET();
+	 }else if(op.equalsIgnoreCase("4")) {
+		 WALLET_To_BANK();
+	 }
 }
+public static void Wallet_To_Wallet() {
+	UserOperations ops = new UserOperations();
+	 Transaction transaction = new Transaction();
+     Date date = new Date();
+     BankAccount ba=new BankAccount();
+     wallet wa = new wallet();
+     Scanner sc = new Scanner(System.in);
+	 System.out.println("Enter Transaction Amount : ");
+	 double tAmount = sc.nextDouble();
+	 if (ba.getBalance() >= amount) {
+			
+         transaction.setAmount(amount);
+         transaction.setTimestamp(date);
+         transaction.setTransactionId(date.getTime());
+         
+         wallet source = walletList.get(currUserId);
+		 transaction.setSourceWallet(source);
+		 System.out.println("enter receiver userId : ");
+		 int receiver = sc.nextInt();
+		 wallet destination = walletList.get(receiver);
+		 transaction.setDestinationWallet(destination);
+		    boolean result = ops.doTransaction(source, destination, transaction.getTransactionType(),tAmount);
+		    if(result) {
+				 System.out.println("transaction successful");
+			 }
+			 else {
+				 System.out.println("Transaction failed");
+			 }
+
+}
+}
+public static void BAnk_To_BANK() {
+	
+}
+
+public static void BANK_TO_WALLET() {
+	
+}
+
+public static void WALLET_To_BANK() {
+	
+}
+
+//	    Scanner opt = new Scanner(System.in);
 //
+//	    Transaction tr = new Transaction();
+//
+//	    System.out.println("Select transaction type (1: DEBIT, 2: CREDIT): ");
+//	    int typeOption = opt.nextInt();
+//
+//	    TransactionType transactionType = (typeOption == 1) ? TransactionType.DEBIT : TransactionType.CREDIT;
+//	    BankAccount userBankAccount = getBankAccountByUserId(userId);
+//
+//	    if (userBankAccount != null) {
+//
+//
+//	            if (transactionType == TransactionType.CREDIT) {
+//	            	 System.out.println("Enter transaction amount: ");
+//	         	    double Amount = opt.nextDouble();
+//	         	    tr.setAmount(kalyan.entity.Transaction.getAmount()+Amount);
+//	         	    System.out.println("Your current balance is " + tr.getAmount());
+////	                userBankAccount.setBalance(userBankAccount.getBalance() + Amount);
+//	            } else {
+//	            	 System.out.println("Enter transaction amount: ");
+//	         	    double Amount = opt.nextDouble();
+//	         	    tr.setAmount(kalyan.entity.Transaction.getAmount()-Amount);
+//	         	    System.out.println("Your current balance is " + tr.getAmount());
+////	                userBankAccount.setBalance(userBankAccount.getBalance() - Amount);
+//	            }
+//	            System.out.println("Transaction successful");
+//	            System.out.println("Updated balance: " + userBankAccount.getBalance());
+//	        
+//	    } else {
+//	        System.out.println("User's bank account not found. Transaction failed.");
+//	    }
 //	
+}
+
+
+
+
+
+

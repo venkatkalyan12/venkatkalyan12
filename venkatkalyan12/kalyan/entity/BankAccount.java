@@ -1,5 +1,7 @@
 package kalyan.entity;
 
+import java.util.List;
+
 public class BankAccount {
 //	int balance;
 //	int previousTranscation;
@@ -9,6 +11,14 @@ public class BankAccount {
 	private String bankName;
 	private AcctType acctType;
 	private int userid;
+	private static double acctBalance;
+	
+	public double getAcctBalance() {
+		return acctBalance;
+	}
+	public void setAcctBalance(double acctBalance) {
+		this.acctBalance = acctBalance;
+	}
 	public static String getAcctNumber() {
 		return acctNumber;
 	}
@@ -45,12 +55,27 @@ public class BankAccount {
 	public void setUserid(int userid) {
 		this.userid = userid;
 	}
-	public double getBalance() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-	public void setBalance(double d) {
-		// TODO Auto-generated method stub
+	public static double getBalance() {
+		return acctBalance;
 		
 	}
+	public double setBalance(double accBalance) {
+		this.acctBalance = acctBalance;
+		return acctBalance = getBalance();
+	}
+//	public List<BankAccount> String getBankList() {
+//		
+//		return this.acctNumber+":"+this.bankName+":"+this.IFSC+":"+this.acctType+":"+this.acctPin+":"+this.acctBalance;
+//	}
+	public String printBankAcctDetails() {
+		return "["+this.acctNumber+":"+this.bankName+":"+this.IFSC+":"+this.acctType+":"+this.acctPin+":"+this.acctBalance+"]";		
+	}
+	  public void addBalance(double amount) {
+	        acctBalance += amount;
+	    }
+	  public void deductBalance(double amount) {
+	        acctBalance -= amount;
+	    }
+
+
 }

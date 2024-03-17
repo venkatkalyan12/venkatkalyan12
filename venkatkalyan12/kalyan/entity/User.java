@@ -85,10 +85,7 @@ public class User {
 	public String toString() {
 		return this.userId+":"+ this.firstName +":"+ this.lastName + ":"+this.phoneNum+":"+this.gmail+":"+this.dateOfBirth+":"+this.communicationAddr;
 	}
-	public List<BankAccount> getBankList() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 	
 	    }
 

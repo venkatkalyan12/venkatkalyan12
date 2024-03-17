@@ -10,7 +10,13 @@ public class wallet {
 	public void setBalance(double balance) {
 		this.balance = balance;
 	}
+	  public void addBalance(double amount) {
+	        balance += amount;
+	    }
 
+	    public void deductBalance(double amount) {
+	        balance -= amount;
+	    }
 
 	
 }

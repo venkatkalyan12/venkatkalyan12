@@ -1,13 +1,9 @@
 package kalyan.entity;
 
 public enum TransactionType {
-	DEPOSIT,
-	WITHDRAWAL,;
+	DEBIT,
+	CREDIT,;
 
-	public void add(Transaction transaction) {
-		// TODO Auto-generated method stub
-		
-	}
 
-	
+
 }

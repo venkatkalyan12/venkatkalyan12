@@ -89,10 +89,52 @@ Map<User,List<BankAccount>> userBankAcctMap = new HashMap<User,List<BankAccount>
 	
 	for(User u:list) {
 		if(list != null) {
-			userBankAcctMap.put(u, u.getBankList());
+			userBankAcctMap.put(u, u.getBankAcctList());
 		}
 	}
 	return userBankAcctMap;
 	
 }
+public boolean doTransaction(wallet sender , wallet receiver , TransactionType tType,double amount) {
+	if(sender.getBalance()>amount) {
+		receiver.setBalance(receiver.getBalance()+amount);
+		sender.setBalance(sender.getBalance()-amount);
+		return true;
+	}
+	return false;
+
+
 }
+public boolean doTransaction(BankAccount sender , BankAccount receiver , TransactionType tType,double amount) {
+	if(sender.getAcctBalance()>amount) {
+		receiver.setAcctBalance(receiver.getAcctBalance()+amount);
+		sender.setAcctBalance(sender.getAcctBalance()-amount);
+		return true;
+	}
+	return false;
+
+
+}
+public boolean doTransaction(BankAccount sender , wallet receiver , TransactionType tType,double amount) {
+	if(sender.getAcctBalance()>amount) {
+		receiver.setBalance(receiver.getBalance()+amount);
+		sender.setAcctBalance(sender.getAcctBalance()-amount);
+		return true;
+	}
+	return false;
+
+
+}
+public boolean doTransaction(wallet sender , BankAccount receiver , TransactionType tType,double amount) {
+	if(sender.getBalance()>amount) {
+		receiver.setAcctBalance(receiver.getAcctBalance()+amount);
+		sender.setBalance(sender.getBalance()-amount);
+		return true;
+	}
+	return false;
+
+}
+
+}
+
+
